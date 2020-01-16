@@ -1,0 +1,103 @@
+#!/bin/bash
+
+version=1.0.0
+
+while getopts 'b:c:dhp:rs:v' opts; do
+  case $opts in
+    b )
+      cmd="$0 -s"
+      case ${OPTARG} in
+        default | d | def | 0 ) $cmd 49 ;;
+        black | bl | bk ) $cmd 40 ;;
+        red | r ) $cmd 41 ;;
+        green | g ) $cmd 42 ;;
+        yellow | y ) $cmd 43 ;;
+        blue | b ) $cmd 44 ;;
+        magenta | m ) $cmd 45 ;;
+        cyan | c ) $cmd 46 ;;
+        lightgray | lgr ) $cmd 47 ;;
+        darkgray | dgr ) $cmd 100 ;;
+        lightred | lr ) $cmd 101 ;;
+        lightgreen | lg ) $cmd 102 ;;
+        lightyellow | ly ) $cmd 103 ;;
+        lightblue | lb ) $cmd 104 ;;
+        lightmagenta | lm ) $cmd 105 ;;
+        lightcyan | lc ) $cmd 106 ;;
+        white | w ) $cmd 107 ;;
+      esac
+      ;;
+    c )
+      cmd="$0 -s"
+      case ${OPTARG} in
+        default | d | def | 0 ) $cmd 39 ;;
+        black | bl | bk ) $cmd 30 ;;
+        red | r ) $cmd 31 ;;
+        green | g ) $cmd 32 ;;
+        yellow | y ) $cmd 33 ;;
+        blue | b ) $cmd 34 ;;
+        magenta | m ) $cmd 35 ;;
+        cyan | c ) $cmd 36 ;;
+        lightgray | lgr ) $cmd 37 ;;
+        darkgray | dgr ) $cmd 90 ;;
+        lightred | lr ) $cmd 91 ;;
+        lightgreen | lg ) $cmd 92 ;;
+        lightyellow | ly ) $cmd 93 ;;
+        lightblue | lb ) $cmd 94 ;;
+        lightmagenta | lm ) $cmd 95 ;;
+        lightcyan | lc ) $cmd 96 ;;
+        white | w ) $cmd 97 ;;
+      esac
+      ;;
+    d )
+      cmd="$0 -s"
+      case ${OPTARG} in
+        all | a | 0 ) $cmd 0 ;;
+        bold | b ) $cmd 21 ;;
+        dim | d ) $cmd 22 ;;
+        oblique | o ) $cmd 23 ;;
+        underline | u ) $cmd 24 ;;
+        blink | bli | blk ) $cmd 25 ;;
+        reverse | rev | invert | inv | ivt ) $cmd 27 ;;
+        hidden | hid ) $cmd 28 ;;
+      esac
+      ;;
+    h )
+      cat << /end
+command: $0
+usage: $0 [option]
+options:
+  -b : set Background color
+  -c : set foreground Color
+  -d : unset property (Depropoty)
+  -h : show Help
+  -p : set Property
+  -r : cleaR color and property
+  -s : Set control sequences code
+  -v : show Version
+/end
+      ;;
+    p )
+      cmd="$0 -s"
+      case ${OPTARG} in
+        clear | c | 0 ) $cmd 0 ;;
+        bold | b ) $cmd 1 ;;
+        dim | d ) $cmd 2 ;;
+        oblique | o ) $cmd 3 ;;
+        underline | u ) $cmd 4 ;;
+        blink | bli ) $cmd 5 ;;
+        reverse | rev | invert | inv | ivt ) $cmd 7 ;;
+        hidden | hid ) $cmd 8 ;;
+      esac
+      ;;
+    r )
+      # clear
+      $0 -p 0
+      ;;
+    s )
+      echo -en "\033[${OPTARG}m"
+      ;;
+    v )
+      echo $version
+      ;;
+  esac
+done
