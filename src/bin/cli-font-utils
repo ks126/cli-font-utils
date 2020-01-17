@@ -1,6 +1,11 @@
 #!/bin/bash
 
-version=1.0.0
+version=1.1.2
+
+function case_else() {
+  echo $(basename $0): undefined value \"$1\" >&2
+  exit 1
+}
 
 while getopts 'b:c:d:hl:p:rs:v' opts; do
   case $opts in
@@ -24,6 +29,7 @@ while getopts 'b:c:d:hl:p:rs:v' opts; do
         lightmagenta | lm ) $cmd 105 ;;
         lightcyan | lc ) $cmd 106 ;;
         white | w ) $cmd 107 ;;
+        * ) case_else ${OPTARG} ;;
       esac
       ;;
     c )
@@ -46,6 +52,7 @@ while getopts 'b:c:d:hl:p:rs:v' opts; do
         lightmagenta | lm ) $cmd 95 ;;
         lightcyan | lc ) $cmd 96 ;;
         white | w ) $cmd 97 ;;
+        * ) case_else ${OPTARG} ;;
       esac
       ;;
     d )
@@ -59,6 +66,7 @@ while getopts 'b:c:d:hl:p:rs:v' opts; do
         blink | bli | blk ) $cmd 25 ;;
         reverse | rev | invert | inv | ivt ) $cmd 27 ;;
         hidden | hid ) $cmd 28 ;;
+        * ) case_else ${OPTARG} ;;
       esac
       ;;
     h )
@@ -88,6 +96,7 @@ options:
           property ) $0 -p ${right_side} ;;
           deproperty ) $0 -d ${right_side} ;;
           clear ) $0 -r ;;
+          * ) case_else ${left_side} ;;
         esac
       done <<< "$(grep -v '^//' < ${OPTARG} | sed '/^$/d' | tr ';' '\n')"
       ;;
@@ -102,6 +111,7 @@ options:
         blink | bli ) $cmd 5 ;;
         reverse | rev | invert | inv | ivt ) $cmd 7 ;;
         hidden | hid ) $cmd 8 ;;
+        * ) case_else ${OPTARG} ;;
       esac
       ;;
     r )
