@@ -2,7 +2,7 @@
 
 version=1.0.0
 
-while getopts 'b:c:dhl:p:rs:v' opts; do
+while getopts 'b:c:d:hl:p:rs:v' opts; do
   case $opts in
     b )
       cmd="$0 -s"
