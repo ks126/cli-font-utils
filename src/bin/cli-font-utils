@@ -2,7 +2,7 @@
 
 version=1.0.0
 
-while getopts 'b:c:dhp:rs:v' opts; do
+while getopts 'b:c:dhl:p:rs:v' opts; do
   case $opts in
     b )
       cmd="$0 -s"
@@ -70,11 +70,26 @@ options:
   -c : set foreground Color
   -d : unset property (Depropoty)
   -h : show Help
+  -l : Load tss file
   -p : set Property
   -r : cleaR color and property
   -s : Set control sequences code
   -v : show Version
 /end
+      ;;
+    l )
+      while read line; do
+        left_side=$(awk -F : '{print $1}' <<< "$line")
+        right_side=$(awk -F : '{print $2}' <<< "$line")
+        case ${left_side} in
+          set ) $0 -s ${right_side} ;;
+          color ) $0 -c ${right_side} ;;
+          background-color ) $0 -b ${right_side} ;;
+          property ) $0 -p ${right_side} ;;
+          deproperty ) $0 -d ${right_side} ;;
+          clear ) $0 -r ;;
+        esac
+      done <<< "$(grep -v '^//' < ${OPTARG} | sed '/^$/d' | tr ';' '\n')"
       ;;
     p )
       cmd="$0 -s"
